@@ -1,0 +1,9 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  button {
+    max-width: 300px;
+  }
+}

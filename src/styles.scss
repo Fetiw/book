@@ -1,1 +1,63 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+a {
+  color: #4444fb;
+  text-decoration: none;
+  position: relative;
+  transition: color 400ms;
+
+  &:after,
+  &:before {
+    position: absolute;
+    bottom: -2px;
+    width: 0;
+    height: 3px;
+    content: "";
+    background: #091252;
+    transition: width 400ms linear;
+  }
+  &:after {
+    right: calc(50%);
+  }
+  &:before {
+    left: calc(50%);
+  }
+  &:hover {
+    color: #091252;
+    &:after,
+    &:before {
+      width: 50%;
+    }
+  }
+}
+
+.layout-container {
+  padding: 20px 15px;
+}
+
+@media (min-width: 576px) {
+  .layout-container {
+    padding: 20px calc(50vw - 270px);
+  }
+}
+
+@media (min-width: 768px) {
+  .layout-container {
+    padding: 30px calc(50vw - 360px);
+  }
+}
+
+@media (min-width: 992px) {
+  .layout-container {
+    padding: 40px calc(50vw - 480px);
+  }
+}
+
+@media (min-width: 1200px) {
+  .layout-container {
+    padding: 50px calc(50vw - 590px);
+  }
+}
