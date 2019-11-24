@@ -1,17 +1,17 @@
-<div *ngIf="book">
+<div *ngIf="(book$ | async)">
   <section>
-    <h2>{{ book.title }}</h2>
+    <h2>{{ (book$ | async).title }}</h2>
 
-    <a [routerLink]="'/book/' + book.id + '/edit'" class="edit">
+    <a [routerLink]="'/book/' + (book$ | async).id + '/edit'" class="edit">
       edit
     </a>
 
     <div class="date">
-      <div>Дата створення {{ book.createdOn }}</div>
-      <div>Дата оновлення {{ book.updatedAt }}</div>
+      <div>Дата створення {{ (book$ | async).createdOn }}</div>
+      <div>Дата оновлення {{ (book$ | async).updatedAt }}</div>
     </div>
-    <div><span>Автор: </span>  {{ book.author }}</div>
-    <div> Кількість сторінок {{ book.pagesQuantity }}</div>
-    <div> Опис {{ book.description }}</div>
+    <div><span>Автор: </span>  {{ (book$ | async).author }}</div>
+    <div> Кількість сторінок {{ (book$ | async).pagesQuantity }}</div>
+    <div> Опис {{ (book$ | async).description }}</div>
   </section>
 </div>

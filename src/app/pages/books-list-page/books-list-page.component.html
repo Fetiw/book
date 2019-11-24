@@ -1,5 +1,5 @@
 <div class="grid">
-  <mat-card *ngFor="let book of books">
+  <mat-card *ngFor="let book of books$ | async">
     <mat-card-title>
       <a [routerLink]="'/book/' + book.id" class="item-book">
       {{ book.title }}

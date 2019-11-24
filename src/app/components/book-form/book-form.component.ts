@@ -1,7 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { BookService } from '../../book.service';
 import { Book } from '../../models/book';
+import { AppState } from '../../reducers';
+import { select, Store } from '@ngrx/store';
+import { getBookAuthors, getBookLastId } from '../../reducers/book.selectors';
+import { addBook, updateBook } from '../../reducers/book.actions';
+import { Observable } from 'rxjs';
+import { filter, flatMap, startWith } from 'rxjs/operators';
+import { promise } from 'selenium-webdriver';
+import map = promise.map;
 
 @Component({
   selector: 'app-book-form',
@@ -10,6 +17,10 @@ import { Book } from '../../models/book';
 })
 export class BookFormComponent implements OnInit {
 
+  lastId: number;
+
+  authors$: Observable<string[]> = this.store.pipe(select(getBookAuthors));
+
   @Input()
   book?: Book;
 
@@ -17,22 +28,41 @@ export class BookFormComponent implements OnInit {
     title: new FormControl(''),
     author: new FormControl(''),
     description: new FormControl(''),
-    pagesQuantity: new FormControl('')
+    pagesQuantity: new FormControl(''),
+    testName: new FormControl('')
   });
 
-  constructor(private formBuilder: FormBuilder, private bookService: BookService) { }
+  constructor(private formBuilder: FormBuilder, private store: Store<AppState>) { }
 
   ngOnInit() {
+    this.form.controls.author.valueChanges
+      .subscribe(value => {
+        this.authors$ = this.store.pipe(select(getBookAuthors, value || ''));
+      });
+
     if (this.book) {
       this.form.patchValue(this.book);
     }
+
+    this.store.pipe(select(getBookLastId)).subscribe(id => this.lastId = id);
   }
 
   onSubmit() {
+    const now = new Date().toISOString().split('T')[0];
+
     if (this.book) {
-      this.bookService.updateBook(this.book.id, this.form.value);
+      this.store.dispatch(updateBook({
+        ...this.book,
+        ...this.form.value,
+        updatedAt: now,
+      }, this.book.id));
     } else {
-      this.bookService.addBook(this.form.value);
+      this.store.dispatch(addBook({
+        ...this.form.value,
+        id: this.lastId + 1,
+        createdOn: now,
+        updatedAt: now,
+      }));
     }
 
     this.form.reset();

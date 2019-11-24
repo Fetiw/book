@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { BookService } from '../../book.service';
 import { Book } from '../../models/book';
+import { select, Store } from '@ngrx/store';
+import { AppState } from '../../reducers';
+import { getAllBooks } from '../../reducers/book.selectors';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-books-list-page',
@@ -9,11 +12,12 @@ import { Book } from '../../models/book';
 })
 export class BooksListPageComponent implements OnInit {
 
-  books: Book[] = [];
+  books$: Observable<Book[]> = this.store.pipe(
+    select(getAllBooks)
+  );
 
-  constructor( private bookService: BookService ) { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.books = this.bookService.getAllBooks();
   }
 }

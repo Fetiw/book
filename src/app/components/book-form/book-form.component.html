@@ -1,7 +1,5 @@
 <form [formGroup]="form" (submit)="onSubmit()" class="layout-container">
-
   <div class="example-container">
-
     <mat-form-field appearance="outline">
       <mat-label>Назва книги</mat-label>
       <input matInput #title type="text" maxlength="150" placeholder="Назва книги" formControlName="title">
@@ -10,7 +8,13 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Автор</mat-label>
-      <input matInput type="text" placeholder="Автор" formControlName="author">
+      <input matInput type="text" placeholder="Автор" formControlName="author" [matAutocomplete]="auto">
+
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let author of authors$ | async" [value]="author">
+          {{author}}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -24,7 +28,5 @@
     </mat-form-field>
 
     <button mat-raised-button type="submit">Отправить</button>
-
   </div>
-
 </form>
