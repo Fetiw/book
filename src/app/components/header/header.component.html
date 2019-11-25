@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+  <div class="logo">
+    <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+  </div>
+  <span class="fill-remaining-space">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" [overlapTrigger]="false">
+      <button mat-menu-item routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon>home</mat-icon>
+        <span>Домівка</span>
+      </button>
+      <button mat-menu-item routerLink="form" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon>book</mat-icon>
+        <span>Додати книжку</span>
+      </button>
+    </mat-menu>
+  </span>
+</mat-toolbar>

@@ -1,0 +1,24 @@
+mat-toolbar {
+  background: blue;
+  display: flex;
+  justify-content: flex-end;
+
+  a {
+    font-size: 16px;
+    color: white;
+    margin: 0 15px;
+    text-transform: uppercase;
+    &:after,
+    &:before {
+      background: white;
+    }
+  }
+}
+
+.logo {
+  margin-right: auto;
+
+  a {
+    font-size: 25px;
+  }
+}
