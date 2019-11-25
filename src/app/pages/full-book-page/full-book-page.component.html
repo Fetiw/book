@@ -6,6 +6,10 @@
       edit
     </a>
 
+    <a (click)="removeBook()">
+      Видалити книгу
+    </a>
+
     <div class="date">
       <div>Дата створення {{ (book$ | async).createdOn }}</div>
       <div>Дата оновлення {{ (book$ | async).updatedAt }}</div>

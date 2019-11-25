@@ -6,9 +6,7 @@ import { select, Store } from '@ngrx/store';
 import { getBookAuthors, getBookLastId } from '../../reducers/book.selectors';
 import { addBook, updateBook } from '../../reducers/book.actions';
 import { Observable } from 'rxjs';
-import { filter, flatMap, startWith } from 'rxjs/operators';
-import { promise } from 'selenium-webdriver';
-import map = promise.map;
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-form',
@@ -32,40 +30,46 @@ export class BookFormComponent implements OnInit {
     testName: new FormControl('')
   });
 
-  constructor(private formBuilder: FormBuilder, private store: Store<AppState>) { }
+  constructor(private formBuilder: FormBuilder, private store: Store<AppState>, private router: Router) { }
 
   ngOnInit() {
+    this.store.pipe(select(getBookLastId)).subscribe(id => this.lastId = id);
     this.form.controls.author.valueChanges
       .subscribe(value => {
         this.authors$ = this.store.pipe(select(getBookAuthors, value || ''));
       });
-
     if (this.book) {
       this.form.patchValue(this.book);
     }
 
-    this.store.pipe(select(getBookLastId)).subscribe(id => this.lastId = id);
+
+
   }
 
   onSubmit() {
     const now = new Date().toISOString().split('T')[0];
-
-    if (this.book) {
-      this.store.dispatch(updateBook({
-        ...this.book,
-        ...this.form.value,
-        updatedAt: now,
-      }, this.book.id));
-    } else {
-      this.store.dispatch(addBook({
-        ...this.form.value,
-        id: this.lastId + 1,
-        createdOn: now,
-        updatedAt: now,
-      }));
+    if (this.form.status === 'VALID') {
+      if (this.book) {
+        this.store.dispatch(updateBook({
+          ...this.book,
+          ...this.form.value,
+          updatedAt: now,
+        }, this.book.id));
+        this.router.navigate(['book/' + this.book.id]);
+      } else {
+        this.store.dispatch(addBook({
+          ...this.form.value,
+          id: this.lastId + 1,
+          createdOn: now,
+          updatedAt: now,
+        }));
+        this.router.navigate(['book/' + this.lastId]);
+      }
     }
 
+
     this.form.reset();
+
   }
 
 }
