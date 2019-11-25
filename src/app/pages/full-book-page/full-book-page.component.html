@@ -1,21 +1,30 @@
 <div *ngIf="(book$ | async)">
-  <section>
-    <h2>{{ (book$ | async).title }}</h2>
+  <section class="layout-container">
+    <h1>{{ (book$ | async).title }}</h1>
 
-    <a [routerLink]="'/book/' + (book$ | async).id + '/edit'" class="edit">
-      edit
-    </a>
+    <button mat-stroked-button color="primary" [routerLink]="'/book/' + (book$ | async).id + '/edit'" class="edit">
+      Редагувати
+    </button>
 
-    <a (click)="removeBook()">
+    <button mat-stroked-button color="primary" (click)="removeBook()">
       Видалити книгу
-    </a>
+    </button>
 
-    <div class="date">
-      <div>Дата створення {{ (book$ | async).createdOn }}</div>
-      <div>Дата оновлення {{ (book$ | async).updatedAt }}</div>
-    </div>
-    <div><span>Автор: </span>  {{ (book$ | async).author }}</div>
-    <div> Кількість сторінок {{ (book$ | async).pagesQuantity }}</div>
-    <div> Опис {{ (book$ | async).description }}</div>
+   <div class="full-page">
+     <div class="information">
+       <div><span>Автор: </span>  {{ (book$ | async).author }}</div>
+       <div class="pages"><span>Кількість сторінок: </span> {{ (book$ | async).pagesQuantity }}</div>
+       <div class="date">
+         <div class="create"><span>Дата створення: </span> {{ (book$ | async).createdOn }}</div>
+         <div class="update"><span>Дата оновлення: </span> {{ (book$ | async).updatedAt }}</div>
+       </div>
+     </div>
+
+     <div class="description">
+       <h3>Огляд книжки:</h3>
+       <p>{{ (book$ | async).description }}</p>
+     </div>
+   </div>
+
   </section>
 </div>

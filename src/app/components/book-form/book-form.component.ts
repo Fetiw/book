@@ -23,11 +23,10 @@ export class BookFormComponent implements OnInit {
   book?: Book;
 
   form = this.formBuilder.group({
-    title: new FormControl(''),
-    author: new FormControl(''),
-    description: new FormControl(''),
-    pagesQuantity: new FormControl(''),
-    testName: new FormControl('')
+    title: new FormControl('', [Validators.required]),
+    author: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required]),
+    pagesQuantity: new FormControl('', [Validators.required]),
   });
 
   constructor(private formBuilder: FormBuilder, private store: Store<AppState>, private router: Router) { }
@@ -41,35 +40,25 @@ export class BookFormComponent implements OnInit {
     if (this.book) {
       this.form.patchValue(this.book);
     }
-
-
-
   }
 
   onSubmit() {
     const now = new Date().toISOString().split('T')[0];
-    if (this.form.status === 'VALID') {
-      if (this.book) {
-        this.store.dispatch(updateBook({
-          ...this.book,
-          ...this.form.value,
-          updatedAt: now,
-        }, this.book.id));
-        this.router.navigate(['book/' + this.book.id]);
-      } else {
-        this.store.dispatch(addBook({
-          ...this.form.value,
-          id: this.lastId + 1,
-          createdOn: now,
-          updatedAt: now,
-        }));
-        this.router.navigate(['book/' + this.lastId]);
-      }
+    if (this.book) {
+      this.store.dispatch(updateBook({
+        ...this.book,
+        ...this.form.value,
+        updatedAt: now,
+      }, this.book.id));
+      this.router.navigate(['book/' + this.book.id]);
+    } else {
+      this.store.dispatch(addBook({
+        ...this.form.value,
+        id: this.lastId + 1,
+        createdOn: now,
+        updatedAt: now,
+      }));
+      this.router.navigate(['book/' + this.lastId]);
     }
-
-
-    this.form.reset();
-
   }
-
 }
