@@ -30,6 +30,14 @@ export const getBookAuthors = createSelector(
     .filter(author => author.toLowerCase().includes(contains.toLowerCase()))
 );
 
+export const getBookName = createSelector(
+  selectBooks,
+  getAllBooks,
+  (state: BookReducerState, books: Book[], contains: string = '') => books
+    .map(book => book.title)
+    .filter(nameBook => nameBook.toLowerCase().includes(contains.toLowerCase()))
+);
+
 export const getAllBookOfAuthor = createSelector(
   selectBooks,
   getAllBooks,

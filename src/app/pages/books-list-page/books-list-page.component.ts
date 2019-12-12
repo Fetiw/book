@@ -16,7 +16,9 @@ export class BooksListPageComponent implements OnInit {
     select(getAllBooks)
   );
 
-  constructor(private store: Store<AppState>) { }
+  constructor(
+    private store: Store<AppState>,
+  ) { }
 
   ngOnInit() {
   }

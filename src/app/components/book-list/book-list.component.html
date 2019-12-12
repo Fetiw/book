@@ -1,0 +1,47 @@
+<div class="grid">
+  <mat-card *ngFor="let book of books | paginate: { itemsPerPage: count, currentPage: p }">
+    <mat-card-title>
+      <a [routerLink]="'/book/' + book.id" class="item-book">
+        {{ book.title }}
+      </a>
+    </mat-card-title>
+
+    <mat-card-subtitle class="author">{{ book.author }}</mat-card-subtitle>
+
+    <mat-card-content>
+      <div class="description">
+        {{ book.description | slice : 0 : 100 }}...
+      </div>
+      <div class="pages"><span>Сторінок </span>{{ book.pagesQuantity }}</div>
+    </mat-card-content>
+
+    <div class="setting">
+
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+        <button
+          mat-menu-item
+          [routerLink]="'/book/' + book.id + '/edit'">
+          <mat-icon>edit</mat-icon>
+          <span>Редагувати</span>
+        </button>
+        <button mat-menu-item
+                (click)="removeBook(book.id)">
+          <mat-icon>delete_forever</mat-icon>
+          <span>Видалити книгу</span>
+        </button>
+      </mat-menu>
+
+    </div>
+
+  </mat-card>
+
+  <div class="text-right">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</div>
+
+

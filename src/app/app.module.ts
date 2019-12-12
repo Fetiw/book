@@ -16,6 +16,9 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
+import { HeaderComponent } from './components/header/header.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { BookListComponent } from './components/book-list/book-list.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import { AppEffects } from './app.effects';
     FullBookPageComponent,
     BooksListPageComponent,
     BooksFormAddComponent,
-    BookEditPageComponent
+    BookEditPageComponent,
+    HeaderComponent,
+    BookListComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,8 @@ import { AppEffects } from './app.effects';
         strictActionImmutability: true
       }
     }),
-    EffectsModule.forRoot([AppEffects])
+    EffectsModule.forRoot([AppEffects]),
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
