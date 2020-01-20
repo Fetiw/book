@@ -19,6 +19,10 @@ import { AppEffects } from './app.effects';
 import { HeaderComponent } from './components/header/header.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BookListComponent } from './components/book-list/book-list.component';
+import { DialogOverviewExampleDialog } from './components/book-list/dialog-overview-example';
+import { TableBooksComponent } from './pages/table-books/table-books.component';
+import { TableComponent } from './components/table/table.component';
+import {MatNativeDateModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -30,11 +34,15 @@ import { BookListComponent } from './components/book-list/book-list.component';
     BookEditPageComponent,
     HeaderComponent,
     BookListComponent,
+    DialogOverviewExampleDialog,
+    TableBooksComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
@@ -48,6 +56,7 @@ import { BookListComponent } from './components/book-list/book-list.component';
     EffectsModule.forRoot([AppEffects]),
     NgxPaginationModule
   ],
+  entryComponents: [DialogOverviewExampleDialog],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { removeBook } from '../../reducers/book.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogOverviewExampleDialog } from './dialog-overview-example';
 
 @Component({
   selector: 'app-book-list',
@@ -12,18 +14,23 @@ export class BookListComponent implements OnInit {
 
   @Input()
   books = [];
-  p: Number = 1;
-  count: Number = 5;
+  p = 1;
+  count = 5;
 
   constructor(
-    private store: Store<AppState>,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
   }
 
-  removeBook(id) {
-    this.store.dispatch(removeBook(+id));
+  openDialog(id): void {
+    console.log(id);
+    this.dialog.open(DialogOverviewExampleDialog, {
+      width: '250px',
+      data: id,
+    });
   }
+
 
 }
