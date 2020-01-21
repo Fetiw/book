@@ -15,6 +15,7 @@ export interface DialogData {
 
 @Component({
   templateUrl: 'dialog-overview-example-dialog.html',
+  styleUrls: ['./book-list.component.scss']
 })
 export class DialogOverviewExampleDialog {
 

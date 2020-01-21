@@ -25,12 +25,9 @@ export class BookListComponent implements OnInit {
   }
 
   openDialog(id): void {
-    console.log(id);
     this.dialog.open(DialogOverviewExampleDialog, {
       width: '250px',
       data: id,
     });
   }
-
-
 }

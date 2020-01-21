@@ -1,22 +1,25 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
   <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef> Id </th>
-    <td mat-cell *matCellDef="let books"> {{books.id}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
   </ng-container>
 
   <ng-container matColumnDef="author">
-    <th mat-header-cell *matHeaderCellDef> Автор </th>
-    <td mat-cell *matCellDef="let books"> {{books.author}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Автор </th>
+    <td mat-cell *matCellDef="let element"> {{element.author}} </td>
   </ng-container>
 
   <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef> Назва </th>
-    <td mat-cell *matCellDef="let books"> {{books.title}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Назва Книги </th>
+    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns">hui</tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-
 

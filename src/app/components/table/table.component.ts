@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatSort} from '@angular/material/sort';
+import {MatSort, Sort} from "@angular/material/sort";
+import {Book} from "../../models/book";
+import {MatTableDataSource} from "@angular/material/table";
 
 
 @Component({
@@ -14,16 +15,20 @@ export class TableComponent implements OnInit {
   @Input()
   books = [];
 
-  displayedColumns: string[] = ['id', 'title', 'author'];
   dataSource;
 
+  displayedColumns: string[] = ['id', 'author', 'title'];
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.books);
     this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }
