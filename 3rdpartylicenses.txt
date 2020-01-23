@@ -105,6 +105,10 @@ THE SOFTWARE.
 
 @angular/material/menu
 
+@angular/material/paginator
+
+@angular/material/select
+
 @angular/material/snack-bar
 
 @angular/material/sort
