@@ -2,6 +2,7 @@ mat-toolbar {
   background: blue;
   display: flex;
   justify-content: flex-end;
+  position: relative;
 
   a {
     font-size: 16px;

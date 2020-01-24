@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { removeBook } from '../../reducers/book.actions';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../reducers';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogOverviewExampleDialog } from './dialog-overview-example';
+import {Book} from "../../models/book";
+import {BookApiServiceService} from "../../book-api-service.service";
 
 @Component({
   selector: 'app-book-list',
@@ -12,16 +11,22 @@ import { DialogOverviewExampleDialog } from './dialog-overview-example';
 })
 export class BookListComponent implements OnInit {
 
-  @Input()
-  books = [];
+  books: Book[];
+
   p = 1;
   count = 5;
 
   constructor(
     public dialog: MatDialog,
+    private bookApiService: BookApiServiceService,
   ) { }
 
   ngOnInit() {
+    this.bookApiService
+      .getAll()
+      .subscribe(
+        data  => this.books = data
+      );
   }
 
   openDialog(id): void {

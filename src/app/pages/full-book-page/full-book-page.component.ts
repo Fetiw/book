@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '../../models/book';
-import { Observable } from 'rxjs';
-import { select, Store } from '@ngrx/store';
+import {  Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
-import { getBookById } from '../../reducers/book.selectors';
-import { removeBook} from '../../reducers/book.actions';
+import {HttpClient} from "@angular/common/http";
+import {BookApiServiceService} from "../../book-api-service.service";
 
 @Component({
   selector: 'app-full-book-page',
@@ -14,22 +13,34 @@ import { removeBook} from '../../reducers/book.actions';
 })
 export class FullBookPageComponent implements OnInit {
 
-  book$: Observable<Book>;
+  book: Book;
 
-  constructor(private route: ActivatedRoute, private router: Router, private store: Store<AppState>) { }
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router,
+    private bookApiService: BookApiServiceService,
+    private store: Store<AppState>
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe(({id}) => {
-      this.book$ = this.store.pipe(
-        select(getBookById, +id),
+    this.bookApiService
+      .getById(id)
+      .subscribe(
+       data => this.book = data
       );
     });
+
   }
 
   removeBook() {
     this.route.params.subscribe(({id}) => {
-      this.store.dispatch(removeBook(+id));
-      this.router.navigate(['/']);
+      this.bookApiService
+        .deleteBook(id)
+        .subscribe(
+          () => this.router.navigate(['/'])
+        );
     });
   }
 

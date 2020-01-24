@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { removeBook } from '../../reducers/book.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
+import {BookApiServiceService} from "../../book-api-service.service";
 
 export interface DialogData {
   animal: string;
@@ -22,7 +23,7 @@ export class DialogOverviewExampleDialog {
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private store: Store<AppState>,
+    private bookServices: BookApiServiceService,
   ) {}
 
   onNoClick(): void {
@@ -30,8 +31,11 @@ export class DialogOverviewExampleDialog {
   }
 
   removeBook() {
-    this.store.dispatch(removeBook(+this.data));
-    this.dialogRef.close();
+    this.bookServices
+      .deleteBook(+this.data)
+      .subscribe(
+        () => this.dialogRef.close()
+      );
   }
 
 }

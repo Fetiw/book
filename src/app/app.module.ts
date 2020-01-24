@@ -23,6 +23,7 @@ import { DialogOverviewExampleDialog } from './components/book-list/dialog-overv
 import { TableBooksComponent } from './pages/table-books/table-books.component';
 import { TableComponent } from './components/table/table.component';
 import {MatNativeDateModule} from '@angular/material/core';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import {MatNativeDateModule} from '@angular/material/core';
     BookListComponent,
     DialogOverviewExampleDialog,
     TableBooksComponent,
-    TableComponent
+    TableComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +55,8 @@ import {MatNativeDateModule} from '@angular/material/core';
       }
     }),
     EffectsModule.forRoot([AppEffects]),
-    NgxPaginationModule
+    NgxPaginationModule,
+    HttpClientModule,
   ],
   entryComponents: [DialogOverviewExampleDialog],
   providers: [],

@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Book } from '../../models/book';
-import { Observable } from 'rxjs';
-import { select, Store } from '@ngrx/store';
-import { AppState } from '../../reducers';
-import { getBookById } from '../../reducers/book.selectors';
+import {BookApiServiceService} from "../../book-api-service.service";
+import {Book} from "../../models/book";
 
 @Component({
   selector: 'app-book-edit-page',
@@ -13,15 +10,20 @@ import { getBookById } from '../../reducers/book.selectors';
 })
 export class BookEditPageComponent implements OnInit {
 
-  book$: Observable<Book>;
+  @Output()
+  book: Book;
 
-  constructor(private route: ActivatedRoute, private store: Store<AppState>) { }
+  constructor(
+    private route: ActivatedRoute,
+    private bookApiService: BookApiServiceService
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe(({id}) => {
-      this.book$ = this.store.pipe(
-        select(getBookById, +id)
-      );
+      this.bookApiService.getById(id)
+        .subscribe(
+          // console.log
+        );
     });
   }
 

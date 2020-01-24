@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Book } from '../../models/book';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
-import { getAllBooks } from '../../reducers/book.selectors';
-import { Observable } from 'rxjs';
+import {BookApiServiceService} from "../../book-api-service.service";
 
 @Component({
   selector: 'app-books-list-page',
@@ -12,14 +11,19 @@ import { Observable } from 'rxjs';
 })
 export class BooksListPageComponent implements OnInit {
 
-  books$: Observable<Book[]> = this.store.pipe(
-    select(getAllBooks)
-  );
+  books: Book[];
 
   constructor(
     private store: Store<AppState>,
+    private bookApiService: BookApiServiceService,
+
   ) { }
 
   ngOnInit() {
+    this.bookApiService
+      .getAll()
+      .subscribe(
+        data  => this.books = data as Book[]
+      );
   }
 }

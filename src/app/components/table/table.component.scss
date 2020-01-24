@@ -3,3 +3,38 @@ input,
 .mat-form-field {
   width: 100%;
 }
+
+tr {
+  cursor: pointer;
+}
+
+.mat-elevation-z8 {
+  width: calc(100% - 30px);
+  margin: 0 auto;
+  max-width: 992px;
+}
+
+.mat-table {
+
+  .mat-row {
+    background-color: #FFFFFF;
+    transition: all 400ms;
+    box-shadow: 0 2px 2px -2px #0E1119;
+
+    .mat-cell {
+      color: black;
+      transition: all 400ms;
+    }
+
+    &:hover {
+      outline: 1px solid #08045C;
+      box-shadow: #08045C -1px 1px,
+      #08045C -2px 2px,
+      #08045C -3px 3px,
+      #08045C -4px 4px,
+      #08045C -5px 5px;
+      transform: translate3d(5px, -5px, 0);
+    }
+  }
+
+}

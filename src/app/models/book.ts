@@ -1,5 +1,5 @@
 export class Book {
-  id?: number;
+  id: number;
   createdOn?: string;
   updatedAt?: string;
   title: string;

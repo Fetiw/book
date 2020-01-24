@@ -3,10 +3,10 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Book } from '../../models/book';
 import { AppState } from '../../reducers';
 import { select, Store } from '@ngrx/store';
-import { getBookAuthors, getBookLastId } from '../../reducers/book.selectors';
-import { addBook, updateBook } from '../../reducers/book.actions';
+import { getBookAuthors } from '../../reducers/book.selectors';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { BookApiServiceService } from "../../book-api-service.service";
 
 @Component({
   selector: 'app-book-form',
@@ -15,12 +15,10 @@ import { Router } from '@angular/router';
 })
 export class BookFormComponent implements OnInit {
 
-  lastId: number;
-
   authors$: Observable<string[]> = this.store.pipe(select(getBookAuthors));
 
   @Input()
-  book?: Book;
+  book: Book;
 
   form = this.formBuilder.group({
     title: new FormControl('', [Validators.required]),
@@ -29,10 +27,14 @@ export class BookFormComponent implements OnInit {
     pagesQuantity: new FormControl('', [Validators.required]),
   });
 
-  constructor(private formBuilder: FormBuilder, private store: Store<AppState>, private router: Router) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private store: Store<AppState>,
+    private bookApiService: BookApiServiceService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.store.pipe(select(getBookLastId)).subscribe(id => this.lastId = id);
     this.form.controls.author.valueChanges
       .subscribe(value => {
         this.authors$ = this.store.pipe(select(getBookAuthors, value || ''));
@@ -44,21 +46,19 @@ export class BookFormComponent implements OnInit {
 
   onSubmit() {
     const now = new Date().toISOString().split('T')[0];
+
     if (this.book) {
-      this.store.dispatch(updateBook({
+      this.bookApiService.editBook({
         ...this.book,
-        ...this.form.value,
-        updatedAt: now,
-      }, this.book.id));
-      this.router.navigate(['book/' + this.book.id]);
+        ...this.form.value
+      },
+        this.book.id
+      );
     } else {
-      this.store.dispatch(addBook({
+      this.bookApiService.addBook({
         ...this.form.value,
-        id: this.lastId + 1,
-        createdOn: now,
-        updatedAt: now,
-      }));
-      this.router.navigate(['book/' + this.lastId]);
+      })
+        .subscribe((book: Book) => this.router.navigate(['book/' + book.id]));
     }
   }
 }
