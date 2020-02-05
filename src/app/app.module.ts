@@ -19,7 +19,7 @@ import { AppEffects } from './app.effects';
 import { HeaderComponent } from './components/header/header.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BookListComponent } from './components/book-list/book-list.component';
-import { DialogOverviewExampleDialog } from './components/book-list/dialog-overview-example';
+import { DialogOverviewExampleDialogComponent } from './components/book-list/dialog-overview-example';
 import { TableBooksComponent } from './pages/table-books/table-books.component';
 import { TableComponent } from './components/table/table.component';
 import {MatNativeDateModule} from '@angular/material/core';
@@ -35,7 +35,7 @@ import {HttpClientModule} from "@angular/common/http";
     BookEditPageComponent,
     HeaderComponent,
     BookListComponent,
-    DialogOverviewExampleDialog,
+    DialogOverviewExampleDialogComponent,
     TableBooksComponent,
     TableComponent,
   ],
@@ -58,7 +58,7 @@ import {HttpClientModule} from "@angular/common/http";
     NgxPaginationModule,
     HttpClientModule,
   ],
-  entryComponents: [DialogOverviewExampleDialog],
+  entryComponents: [DialogOverviewExampleDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

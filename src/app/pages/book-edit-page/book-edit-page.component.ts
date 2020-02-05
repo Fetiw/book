@@ -1,7 +1,7 @@
 import {Component, OnInit, Output} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {BookApiServiceService} from "../../book-api-service.service";
-import {Book} from "../../models/book";
+import {BookApiServiceService} from '../../book-api-service.service';
+import {Book} from '../../models/book';
 
 @Component({
   selector: 'app-book-edit-page',
@@ -10,7 +10,6 @@ import {Book} from "../../models/book";
 })
 export class BookEditPageComponent implements OnInit {
 
-  @Output()
   book: Book;
 
   constructor(
@@ -22,7 +21,7 @@ export class BookEditPageComponent implements OnInit {
     this.route.params.subscribe(({id}) => {
       this.bookApiService.getById(id)
         .subscribe(
-          // console.log
+          book => this.book = book
         );
     });
   }

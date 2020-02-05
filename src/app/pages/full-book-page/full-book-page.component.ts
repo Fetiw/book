@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '../../models/book';
-import {  Store } from '@ngrx/store';
-import { AppState } from '../../reducers';
-import {HttpClient} from "@angular/common/http";
-import {BookApiServiceService} from "../../book-api-service.service";
+import {HttpClient} from '@angular/common/http';
+import {BookApiServiceService} from '../../book-api-service.service';
 
 @Component({
   selector: 'app-full-book-page',
@@ -20,7 +18,6 @@ export class FullBookPageComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private bookApiService: BookApiServiceService,
-    private store: Store<AppState>
   ) { }
 
   ngOnInit() {

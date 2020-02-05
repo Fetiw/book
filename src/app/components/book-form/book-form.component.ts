@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Book } from '../../models/book';
 import { AppState } from '../../reducers';
@@ -13,7 +13,7 @@ import { BookApiServiceService } from "../../book-api-service.service";
   templateUrl: './book-form.component.html',
   styleUrls: ['./book-form.component.scss']
 })
-export class BookFormComponent implements OnInit {
+export class BookFormComponent implements OnInit, OnChanges {
 
   authors$: Observable<string[]> = this.store.pipe(select(getBookAuthors));
 
@@ -39,7 +39,12 @@ export class BookFormComponent implements OnInit {
       .subscribe(value => {
         this.authors$ = this.store.pipe(select(getBookAuthors, value || ''));
       });
-    if (this.book) {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const bookChange: SimpleChange = changes.book;
+
+    if (bookChange.currentValue !== bookChange.previousValue) {
       this.form.patchValue(this.book);
     }
   }
@@ -49,14 +54,20 @@ export class BookFormComponent implements OnInit {
 
     if (this.book) {
       this.bookApiService.editBook({
-        ...this.book,
-        ...this.form.value
-      },
+          ...this.book,
+          ...this.form.value,
+          updatedAt: now,
+        },
         this.book.id
-      );
+      )
+        .subscribe((book: Book) => {
+          this.router.navigate(['book/' + book.id]);
+        });
     } else {
       this.bookApiService.addBook({
         ...this.form.value,
+        createdAt: now,
+        updatedAt: now,
       })
         .subscribe((book: Book) => this.router.navigate(['book/' + book.id]));
     }

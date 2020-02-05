@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Book} from "./models/book";
+import {HttpClient} from '@angular/common/http';
+import {Book} from './models/book';
 
 const BASE_URL = '//5e27180f6eeb4400145367b1.mockapi.io';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class BookApiServiceService {
 
   constructor(private http: HttpClient) { }

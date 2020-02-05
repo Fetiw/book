@@ -1,9 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { removeBook } from '../../reducers/book.actions';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../reducers';
-import {BookApiServiceService} from "../../book-api-service.service";
+import { BookApiServiceService } from '../../book-api-service.service';
+import { Book } from '../../models/book';
 
 export interface DialogData {
   animal: string;
@@ -18,10 +16,12 @@ export interface DialogData {
   templateUrl: 'dialog-overview-example-dialog.html',
   styleUrls: ['./book-list.component.scss']
 })
-export class DialogOverviewExampleDialog {
+export class DialogOverviewExampleDialogComponent {
+
+  books: Book[];
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private bookServices: BookApiServiceService,
   ) {}
@@ -34,7 +34,9 @@ export class DialogOverviewExampleDialog {
     this.bookServices
       .deleteBook(+this.data)
       .subscribe(
-        () => this.dialogRef.close()
+        () => {
+          this.dialogRef.close();
+        },
       );
   }
 

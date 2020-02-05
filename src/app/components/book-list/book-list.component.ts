@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogOverviewExampleDialog } from './dialog-overview-example';
-import {Book} from "../../models/book";
-import {BookApiServiceService} from "../../book-api-service.service";
+import { DialogOverviewExampleDialogComponent } from './dialog-overview-example';
+import {Book} from '../../models/book';
+import {BookApiServiceService} from '../../book-api-service.service';
 
 @Component({
   selector: 'app-book-list',
@@ -30,7 +30,7 @@ export class BookListComponent implements OnInit {
   }
 
   openDialog(id): void {
-    this.dialog.open(DialogOverviewExampleDialog, {
+    this.dialog.open(DialogOverviewExampleDialogComponent, {
       width: '250px',
       data: id,
     });

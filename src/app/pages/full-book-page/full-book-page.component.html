@@ -2,7 +2,7 @@
   <section class="layout-container">
     <h1>{{ book.title }}</h1>
 
-    <button mat-stroked-button color="primary" [routerLink]="'/book/' + book.id + '/edit'" class="edit">
+    <button mat-stroked-button color="primary" [routerLink]="['/book/' + book.id + '/edit']" class="edit">
       Редагувати
     </button>
 
